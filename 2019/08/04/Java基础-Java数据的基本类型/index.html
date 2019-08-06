@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="vlsion的个人博客">
 <meta property="og:description" content="摘要：变量在内存中进行储存时，首先需要申请空间，内存管理器是根据变量类型来进行分配空间的。分配的空间只能用来存储该类型的数据。因此通过定义不同的数据类型，可以在内存中存放小数，整数，字符。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-06T01:50:29.862Z">
+<meta property="og:updated_time" content="2019-08-06T04:37:18.712Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java基础-Java数据的基本类型">
 <meta name="twitter:description" content="摘要：变量在内存中进行储存时，首先需要申请空间，内存管理器是根据变量类型来进行分配空间的。分配的空间只能用来存储该类型的数据。因此通过定义不同的数据类型，可以在内存中存放小数，整数，字符。">
@@ -354,6 +354,23 @@
       
         <p>摘要：变量在内存中进行储存时，首先需要申请空间，内存管理器是根据变量类型来进行分配空间的。分配的空间只能用来存储该类型的数据。<br>因此通过定义不同的数据类型，可以在内存中存放小数，整数，字符。</p>
 <a id="more"></a>
+
+<h3 id="了解"><a href="#了解" class="headerlink" title="了解"></a>了解</h3><p>了解数据的基本类型前，我们先来了解一下位、字节、字符、字符集、编码的意思；以及字节、位、bit、byte、KB、B、字符之间的关系；</p>
+<ul>
+<li><p>位（bit）：是数据存储中的最小单位，每个二进制中的0或者1就是一个位。</p>
+</li>
+<li><p>字节（byte）：8个位组成一个字节。</p>
+</li>
+<li><p>字符：a、A、中、+………都表示一个字符。</p>
+</li>
+<li><p>字符集：各个字符的集合。按照不同的标准收纳的字符集合。</p>
+</li>
+<li><p>编码：规定每个“字符”分别用一个字节还是多个字节存储，用哪些字节来存储，这个规定就叫做“编码“。</p>
+<p>  1字节 = 8位 即为 1byte = 1bit 也是 1B = 8b</p>
+<p>  1字符 = 2字节 = 16位</p>
+<p>  1KB = 1024B</p>
+</li>
+</ul>
 <p>Java中有俩大数据类型：分为:</p>
 <ul>
 <li><p>基本数据类型</p>
@@ -410,8 +427,7 @@
 <p>3，容量大的转换成容量小的类型必须采用强制类型转换，但是转换过程可能导致溢出或者损失精度。<br>如：</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int i = 128</span><br><span class="line">byte m = (byte)i =-128</span><br><span class="line"></span><br><span class="line">int i = 127 </span><br><span class="line">byte m =(byte)i = 127</span><br></pre></td></tr></table></figure>
 
-<p>tips：</p>
-<p> 1，整数的默认类型是int</p>
+<p>tips：<br> 1，整数的默认类型是int</p>
 
       
     </div>
@@ -582,7 +598,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本数据类型"><span class="nav-number">1.</span> <span class="nav-text">基本数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用数据类型"><span class="nav-number">2.</span> <span class="nav-text">引用数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java常量"><span class="nav-number">3.</span> <span class="nav-text">Java常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动类型转换"><span class="nav-number">4.</span> <span class="nav-text">自动类型转换</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#了解"><span class="nav-number">1.</span> <span class="nav-text">了解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本数据类型"><span class="nav-number">2.</span> <span class="nav-text">基本数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用数据类型"><span class="nav-number">3.</span> <span class="nav-text">引用数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java常量"><span class="nav-number">4.</span> <span class="nav-text">Java常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动类型转换"><span class="nav-number">5.</span> <span class="nav-text">自动类型转换</span></a></li></ol></div>
             
 
           </div>
