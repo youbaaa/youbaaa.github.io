@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java学习,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="摘要：java map 详解 - 用法、遍历、排序、常用API…">
+<meta name="keywords" content="Java学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java集合之Map">
+<meta property="og:url" content="/youbaaa.github.io/2017/08/15/Java集合之Map/index.html">
+<meta property="og:site_name" content="vlsion_">
+<meta property="og:description" content="摘要：java map 详解 - 用法、遍历、排序、常用API…">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-07T00:27:12.614Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java集合之Map">
+<meta name="twitter:description" content="摘要：java map 详解 - 用法、遍历、排序、常用API…">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/youbaaa.github.io/2017/08/15/Java集合之Map/">
+
+
+
+
+
+  <title>Java集合之Map | vlsion_</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">vlsion_</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">擅长Ai、Fw、Fl、Br、Ae、Pr、Id、PS等软件的安装与卸载，精通CSS、JavaScript、PHP、C、C＋＋、java、Ruby、Perl、Lisp、python、Objective-C、ActionScript等单词的拼写，熟悉windows、Linux、Mac、Android、IOS等系统的开关机</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/youbaaa.github.io/2017/08/15/Java集合之Map/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="vlsion_">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/girl.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="vlsion_">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java集合之Map</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-15T16:25:56+08:00">
+                2017-08-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java中级/" itemprop="url" rel="index">
+                    <span itemprop="name">Java中级</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>摘要：java map 详解 - 用法、遍历、排序、常用API…<br> <a id="more"></a></p>
+<h2 id="Map用法"><a href="#Map用法" class="headerlink" title="Map用法"></a>Map用法</h2><blockquote>
+<p>类型介绍</p>
+</blockquote>
+<p>Java 自带了各种 Map 类，这些 Map 类可归为三种类型：</p>
+<blockquote>
+<blockquote>
+<p>通用Map</p>
+</blockquote>
+</blockquote>
+<p>用于在应用程序中管理映射，通常在 java.util 程序包中实现 HashMap、Hashtable、Properties、LinkedHashMap、IdentityHashMap、TreeMap、WeakHashMap、ConcurrentHashMap</p>
+<blockquote>
+<blockquote>
+<p>专用Map</p>
+</blockquote>
+</blockquote>
+<p>通常我们不必亲自创建此类Map，而是通过某些其他类对其进行访问 java.util.jar.Attributes、javax.print.attribute.standard.PrinterStateReasons、java.security.Provider、java.awt.RenderingHints、javax.swing.UIDefaults</p>
+<blockquote>
+<blockquote>
+<p>自行实现Map</p>
+</blockquote>
+</blockquote>
+<p>一个用于帮助我们实现自己的Map类的抽象类 AbstractMap</p>
+<blockquote>
+<p>类型区别</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>HashMap</p>
+</blockquote>
+</blockquote>
+<p>最常用的Map,它根据键的HashCode 值存储数据,根据键可以直接获取它的值，具有很快的访问速度。HashMap最多只允许一条记录的键为Null(多条会覆盖);允许多条记录的值为 Null。非同步的。</p>
+<blockquote>
+<blockquote>
+<p>TreeMap</p>
+</blockquote>
+</blockquote>
+<p>能够把它保存的记录根据键(key)排序,默认是按升序排序，也可以指定排序的比较器，当用Iterator 遍历TreeMap时，得到的记录是排过序的。TreeMap不允许key的值为null。非同步的。</p>
+<blockquote>
+<blockquote>
+<p>Hashtable</p>
+</blockquote>
+</blockquote>
+<p>与 HashMap类似,不同的是:key和value的值均不允许为null;它支持线程的同步，即任一时刻只有一个线程能写Hashtable,因此也导致了Hashtale在写入时会比较慢。</p>
+<blockquote>
+<blockquote>
+<p>LinkedHashMap</p>
+</blockquote>
+</blockquote>
+<p>保存了记录的插入顺序，在用Iterator遍历LinkedHashMap时，先得到的记录肯定是先插入的.在遍历的时候会比HashMap慢。key和value均允许为空，非同步的。</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>四种常用Map插入与读取性能比较<br>插入10次平均(ms)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">1W</th>
+<th align="center">10W</th>
+<th align="center">100W</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">HashMap</td>
+<td align="center">56</td>
+<td align="center">261</td>
+<td align="center">3030</td>
+</tr>
+<tr>
+<td align="center">LinkedHashMap</td>
+<td align="center">25</td>
+<td align="center">229</td>
+<td align="center">3069</td>
+</tr>
+<tr>
+<td align="center">TreeMap</td>
+<td align="center">29</td>
+<td align="center">295</td>
+<td align="center">4117</td>
+</tr>
+<tr>
+<td align="center">Hashtable</td>
+<td align="center">24</td>
+<td align="center">234</td>
+<td align="center">3275</td>
+</tr>
+</tbody></table>
+<p>读取10次平均(ms)</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">1W</th>
+<th align="center">10W</th>
+<th align="center">100W</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">HashMap</td>
+<td align="center">2</td>
+<td align="center">21</td>
+<td align="center">220</td>
+</tr>
+<tr>
+<td align="center">LinkedHashMap</td>
+<td align="center">2</td>
+<td align="center">20</td>
+<td align="center">216</td>
+</tr>
+<tr>
+<td align="center">TreeMap</td>
+<td align="center">5</td>
+<td align="center">103</td>
+<td align="center">1446</td>
+</tr>
+<tr>
+<td align="center">Hashtable</td>
+<td align="center">2</td>
+<td align="center">22</td>
+<td align="center">259</td>
+</tr>
+</tbody></table>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>测试代码</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">package net.xsoftlab.baike;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Hashtable;</span><br><span class="line">import java.util.LinkedHashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.Random;</span><br><span class="line">import java.util.TreeMap;</span><br><span class="line">import java.util.UUID;</span><br><span class="line">public class Test &#123;</span><br><span class="line">    static int hashMapW = 0;</span><br><span class="line">    static int hashMapR = 0;</span><br><span class="line">    static int linkMapW = 0;</span><br><span class="line">    static int linkMapR = 0;</span><br><span class="line">    static int treeMapW = 0;</span><br><span class="line">    static int treeMapR = 0;</span><br><span class="line">    static int hashTableW = 0;</span><br><span class="line">    static int hashTableR = 0;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">            Test test = new Test();</span><br><span class="line">            test.test(100 * 10000);</span><br><span class="line">            System.out.println();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;hashMapW = &quot; + hashMapW / 10);</span><br><span class="line">        System.out.println(&quot;hashMapR = &quot; + hashMapR / 10);</span><br><span class="line">        System.out.println(&quot;linkMapW = &quot; + linkMapW / 10);</span><br><span class="line">        System.out.println(&quot;linkMapR = &quot; + linkMapR / 10);</span><br><span class="line">        System.out.println(&quot;treeMapW = &quot; + treeMapW / 10);</span><br><span class="line">        System.out.println(&quot;treeMapR = &quot; + treeMapR / 10);</span><br><span class="line">        System.out.println(&quot;hashTableW = &quot; + hashTableW / 10);</span><br><span class="line">        System.out.println(&quot;hashTableR = &quot; + hashTableR / 10);</span><br><span class="line">    &#125;</span><br><span class="line">    public void test(int size) &#123;</span><br><span class="line">        int index;</span><br><span class="line">        Random random = new Random();</span><br><span class="line">        String[] key = new String[size];</span><br><span class="line">        // HashMap 插入</span><br><span class="line">        Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();</span><br><span class="line">        long start = System.currentTimeMillis();</span><br><span class="line">        for (int i = 0; i &lt; size; i++) &#123;</span><br><span class="line">            key[i] = UUID.randomUUID().toString();</span><br><span class="line">            map.put(key[i], UUID.randomUUID().toString());</span><br><span class="line">        &#125;</span><br><span class="line">        long end = System.currentTimeMillis();</span><br><span class="line">        hashMapW += (end - start);</span><br><span class="line">        System.out.println(&quot;HashMap插入耗时 = &quot; + (end - start) + &quot; ms&quot;);</span><br><span class="line">        // HashMap 读取</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        for (int i = 0; i &lt; size; i++) &#123;</span><br><span class="line">            index = random.nextInt(size);</span><br><span class="line">            map.get(key[index]);</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        hashMapR += (end - start);</span><br><span class="line">        System.out.println(&quot;HashMap读取耗时 = &quot; + (end - start) + &quot; ms&quot;);</span><br><span class="line">        // LinkedHashMap 插入</span><br><span class="line">        map = new LinkedHashMap&lt;String, String&gt;();</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        for (int i = 0; i &lt; size; i++) &#123;</span><br><span class="line">            key[i] = UUID.randomUUID().toString();</span><br><span class="line">            map.put(key[i], UUID.randomUUID().toString());</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        linkMapW += (end - start);</span><br><span class="line">        System.out.println(&quot;LinkedHashMap插入耗时 = &quot; + (end - start) + &quot; ms&quot;);</span><br><span class="line">        // LinkedHashMap 读取</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        for (int i = 0; i &lt; size; i++) &#123;</span><br><span class="line">            index = random.nextInt(size);</span><br><span class="line">            map.get(key[index]);</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        linkMapR += (end - start);</span><br><span class="line">        System.out.println(&quot;LinkedHashMap读取耗时 = &quot; + (end - start) + &quot; ms&quot;);</span><br><span class="line">        // TreeMap 插入</span><br><span class="line">        key = new String[size];</span><br><span class="line">        map = new TreeMap&lt;String, String&gt;();</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        for (int i = 0; i &lt; size; i++) &#123;</span><br><span class="line">            key[i] = UUID.randomUUID().toString();</span><br><span class="line">            map.put(key[i], UUID.randomUUID().toString());</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        treeMapW += (end - start);</span><br><span class="line">        System.out.println(&quot;TreeMap插入耗时 = &quot; + (end - start) + &quot; ms&quot;);</span><br><span class="line">        // TreeMap 读取</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        for (int i = 0; i &lt; size; i++) &#123;</span><br><span class="line">            index = random.nextInt(size);</span><br><span class="line">            map.get(key[index]);</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        treeMapR += (end - start);</span><br><span class="line">        System.out.println(&quot;TreeMap读取耗时 = &quot; + (end - start) + &quot; ms&quot;);</span><br><span class="line">        // Hashtable 插入</span><br><span class="line">        key = new String[size];</span><br><span class="line">        map = new Hashtable&lt;String, String&gt;();</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        for (int i = 0; i &lt; size; i++) &#123;</span><br><span class="line">            key[i] = UUID.randomUUID().toString();</span><br><span class="line">            map.put(key[i], UUID.randomUUID().toString());</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        hashTableW += (end - start);</span><br><span class="line">        System.out.println(&quot;Hashtable插入耗时 = &quot; + (end - start) + &quot; ms&quot;);</span><br><span class="line">        // Hashtable 读取</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        for (int i = 0; i &lt; size; i++) &#123;</span><br><span class="line">            index = random.nextInt(size);</span><br><span class="line">            map.get(key[index]);</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        hashTableR += (end - start);</span><br><span class="line">        System.out.println(&quot;Hashtable读取耗时 = &quot; + (end - start) + &quot; ms&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Map 遍历</p>
+</blockquote>
+<p>增强for循环遍历</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">使用keySet()遍历</span><br><span class="line"></span><br><span class="line">for (String key : map.keySet()) &#123;</span><br><span class="line">    System.out.println(key + &quot; ：&quot; + map.get(key));</span><br><span class="line">&#125;</span><br><span class="line">使用entrySet()遍历</span><br><span class="line"></span><br><span class="line">for (Map.Entry&lt;String, String&gt; entry : map.entrySet()) &#123;</span><br><span class="line">    System.out.println(entry.getKey() + &quot; ：&quot; + entry.getValue());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>迭代器遍历</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">使用keySet()遍历</span><br><span class="line"></span><br><span class="line">Iterator&lt;String&gt; iterator = map.keySet().iterator();</span><br><span class="line">while (iterator.hasNext()) &#123;</span><br><span class="line">    String key = iterator.next();</span><br><span class="line">    System.out.println(key + &quot;　：&quot; + map.get(key));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">使用entrySet()遍历</span><br><span class="line">Iterator&lt;Map.Entry&lt;String, String&gt;&gt; iterator = map.entrySet().iterator();</span><br><span class="line">while (iterator.hasNext()) &#123;</span><br><span class="line">    Map.Entry&lt;String, String&gt; entry = iterator.next();</span><br><span class="line">    System.out.println(entry.getKey() + &quot;　：&quot; + entry.getValue());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<blockquote>
+<p>HashMap四种遍历方式性能比较<br>比较方式</p>
+</blockquote>
+</blockquote>
+<p>分别对四种遍历方式进行10W次迭代，比较用时。</p>
+<blockquote>
+<blockquote>
+<p>测试代码</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">package net.xsoftlab.baike;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Iterator;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.Map.Entry;</span><br><span class="line">public class TestMap &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 初始化，10W次赋值</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = new HashMap&lt;Integer, Integer&gt;();</span><br><span class="line">        for (int i = 0; i &lt; 100000; i++)</span><br><span class="line">            map.put(i, i);</span><br><span class="line">        /** 增强for循环，keySet迭代 **/</span><br><span class="line">        long start = System.currentTimeMillis();</span><br><span class="line">        for (Integer key : map.keySet()) &#123;</span><br><span class="line">            map.get(key);</span><br><span class="line">        &#125;</span><br><span class="line">        long end = System.currentTimeMillis();</span><br><span class="line">        System.out.println(&quot;增强for循环，keySet迭代 -&gt; &quot; + (end - start) + &quot; ms&quot;);</span><br><span class="line">        /** 增强for循环，entrySet迭代 */</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        for (Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            entry.getKey();</span><br><span class="line">            entry.getValue();</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        System.out.println(&quot;增强for循环，entrySet迭代 -&gt; &quot; + (end - start) + &quot; ms&quot;);</span><br><span class="line">        /** 迭代器，keySet迭代 **/</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        Iterator&lt;Integer&gt; iterator = map.keySet().iterator();</span><br><span class="line">        Integer key;</span><br><span class="line">        while (iterator.hasNext()) &#123;</span><br><span class="line">            key = iterator.next();</span><br><span class="line">            map.get(key);</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        System.out.println(&quot;迭代器，keySet迭代 -&gt; &quot; + (end - start) + &quot; ms&quot;);</span><br><span class="line">        /** 迭代器，entrySet迭代 **/</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        Iterator&lt;Map.Entry&lt;Integer, Integer&gt;&gt; iterator1 = map.entrySet().iterator();</span><br><span class="line">        Map.Entry&lt;Integer, Integer&gt; entry;</span><br><span class="line">        while (iterator1.hasNext()) &#123;</span><br><span class="line">            entry = iterator1.next();</span><br><span class="line">            entry.getKey();</span><br><span class="line">            entry.getValue();</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        System.out.println(&quot;迭代器，entrySet迭代 -&gt; &quot; + (end - start) + &quot; ms&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结</p>
+<p>1.增强for循环使用方便，但性能较差，不适合处理超大量级的数据。</p>
+<p>2.迭代器的遍历速度要比增强for循环快很多，是增强for循环的2倍左右。</p>
+<p>3.使用entrySet遍历的速度要比keySet快很多，是keySet的1.5倍左右。</p>
+<blockquote>
+<p>Map 排序</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>HashMap、Hashtable、LinkedHashMap排序</p>
+</blockquote>
+</blockquote>
+<p>注：TreeMap也可以使用此方法进行排序，但是更推荐下面的方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String&gt; map = new HashMap&lt;String, String&gt;();</span><br><span class="line">map.put(&quot;b&quot;, &quot;b&quot;);</span><br><span class="line">map.put(&quot;a&quot;, &quot;c&quot;);</span><br><span class="line">map.put(&quot;c&quot;, &quot;a&quot;);</span><br><span class="line">// 通过ArrayList构造函数把map.entrySet()转换成list</span><br><span class="line">List&lt;Map.Entry&lt;String, String&gt;&gt; list = new ArrayList&lt;Map.Entry&lt;String, String&gt;&gt;(map.entrySet());</span><br><span class="line">// 通过比较器实现比较排序</span><br><span class="line">Collections.sort(list, new Comparator&lt;Map.Entry&lt;String, String&gt;&gt;() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public int compare(Map.Entry&lt;String, String&gt; mapping1, Map.Entry&lt;String, String&gt; mapping2) &#123;</span><br><span class="line">        return mapping1.getKey().compareTo(mapping2.getKey());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">for (Map.Entry&lt;String, String&gt; mapping : list) &#123;</span><br><span class="line">    System.out.println(mapping.getKey() + &quot; ：&quot; + mapping.getValue());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<blockquote>
+<p>TreeMap排序</p>
+</blockquote>
+</blockquote>
+<p>TreeMap默认按key进行升序排序，如果想改变默认的顺序，可以使用比较器:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, String&gt; map = new TreeMap&lt;String, String&gt;(new Comparator&lt;String&gt;() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public int compare(String o1, String o2) &#123;</span><br><span class="line">        // 降序排序</span><br><span class="line">        return o1.compareTo(o2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">map.put(&quot;b&quot;, &quot;b&quot;);</span><br><span class="line">map.put(&quot;a&quot;, &quot;c&quot;);</span><br><span class="line">map.put(&quot;c&quot;, &quot;a&quot;);</span><br><span class="line">for (String key : map.keySet()) &#123;</span><br><span class="line">    System.out.println(key + &quot; ：&quot; + map.get(key));</span><br><span class="line">&#125;</span><br><span class="line">按value排序(通用)</span><br><span class="line">Map&lt;String, String&gt; map = new TreeMap&lt;String, String&gt;();</span><br><span class="line">map.put(&quot;b&quot;, &quot;b&quot;);</span><br><span class="line">map.put(&quot;a&quot;, &quot;c&quot;);</span><br><span class="line">map.put(&quot;c&quot;, &quot;a&quot;);</span><br><span class="line">// 通过ArrayList构造函数把map.entrySet()转换成list</span><br><span class="line">List&lt;Map.Entry&lt;String, String&gt;&gt; list = new ArrayList&lt;Map.Entry&lt;String, String&gt;&gt;(map.entrySet());</span><br><span class="line">// 通过比较器实现比较排序</span><br><span class="line">Collections.sort(list, new Comparator&lt;Map.Entry&lt;String, String&gt;&gt;() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public int compare(Map.Entry&lt;String, String&gt; mapping1, Map.Entry&lt;String, String&gt; mapping2) &#123;</span><br><span class="line">        return mapping1.getValue().compareTo(mapping2.getValue());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">for (String key : map.keySet()) &#123;</span><br><span class="line">    System.out.println(key + &quot; ：&quot; + map.get(key));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h2><table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">clear()</td>
+<td align="center">从 Map 中删除所有映射</td>
+</tr>
+<tr>
+<td align="center">remove(Object key)</td>
+<td align="center">从 Map 中删除键和关联的值</td>
+</tr>
+<tr>
+<td align="center">put(Object key, Object value)</td>
+<td align="center">将指定值与指定键相关联</td>
+</tr>
+<tr>
+<td align="center">putAll(Map t)</td>
+<td align="center">将指定 Map 中的所有映射复制到此 map</td>
+</tr>
+<tr>
+<td align="center">entrySet()</td>
+<td align="center">返回 Map 中所包含映射的 Set 视图。Set 中的每个元素都是一个 Map.Entry 对象，可以使用 getKey() 和 getValue() 方法（还有一个 setValue() 方法）访问后者的键元素和值元素</td>
+</tr>
+<tr>
+<td align="center">keySet()</td>
+<td align="center">返回 Map 中所包含键的 Set 视图。删除 Set 中的元素还将删除 Map 中相应的映射（键和值）</td>
+</tr>
+<tr>
+<td align="center">values()</td>
+<td align="center">返回 map 中所包含值的 Collection 视图。删除 Collection 中的元素还将删除 Map 中相应的映射（键和值）</td>
+</tr>
+<tr>
+<td align="center">get(Object key)</td>
+<td align="center">返回与指定键关联的值</td>
+</tr>
+<tr>
+<td align="center">containsKey(Object key)</td>
+<td align="center">如果 Map 包含指定键的映射，则返回 true</td>
+</tr>
+<tr>
+<td align="center">containsValue(Object value)</td>
+<td align="center">如果此 Map 将一个或多个键映射到指定值，则返回 true</td>
+</tr>
+<tr>
+<td align="center">isEmpty()</td>
+<td align="center">如果 Map 不包含键-值映射，则返回 true</td>
+</tr>
+<tr>
+<td align="center">size()</td>
+<td align="center">返回 Map 中的键-值映射的数目</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java学习/" rel="tag"># Java学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/13/Java集合之Set/" rel="next" title="Java集合之Set">
+                <i class="fa fa-chevron-left"></i> Java集合之Set
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/01/architect-awesome/" rel="prev" title="后端架构师技术图谱">
+                后端架构师技术图谱 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/girl.jpg" alt="vlsion_">
+            
+              <p class="site-author-name" itemprop="name">vlsion_</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Map用法"><span class="nav-number">1.</span> <span class="nav-text">Map用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用API"><span class="nav-number">2.</span> <span class="nav-text">常用API</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vlsion_</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
