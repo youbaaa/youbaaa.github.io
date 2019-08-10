@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="vlsion_">
 <meta property="og:description" content="摘要： 日常开发过程中，经常会碰到俩种错误：1，stackoverflowerror 2，outofmemoryerror 一般碰到这种错误的时候都会很迷茫，一般都会将不合理递归函数改一下，又或者将jvm的内存设置大一点，但是这么做不知道到底是不是最优方法，下面我们或粗略或详细的看一下引发这俩种错误的根本原因，下次碰到这些错误的时候就不会显得手足无措了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-10T02:20:08.606Z">
+<meta property="og:updated_time" content="2019-08-10T04:12:12.783Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识jvm内存模型">
 <meta name="twitter:description" content="摘要： 日常开发过程中，经常会碰到俩种错误：1，stackoverflowerror 2，outofmemoryerror 一般碰到这种错误的时候都会很迷茫，一般都会将不合理递归函数改一下，又或者将jvm的内存设置大一点，但是这么做不知道到底是不是最优方法，下面我们或粗略或详细的看一下引发这俩种错误的根本原因，下次碰到这些错误的时候就不会显得手足无措了。">
@@ -411,6 +411,8 @@
 </blockquote>
 <p>三大收集算法</p>
 <p>1.标记/清除算法【最基础】<br>2.复制算法<br>3.标记/整理算法<br>jvm采用<code>分代收集算法</code>对不同区域采用不同的回收算法。</p>
+<p>如果说垃圾回收算法是内存回收的方法论，那么垃圾收集器就是具体实现。jvm会结合针对不同的场景及用户的配置使用不同的收集器。<br>年轻代收集器<br>Serial、ParNew、Parallel Scavenge<br>老年代收集器<br>Serial Old、Parallel Old、CMS收集器<br>特殊收集器<br>G1收集器[新型，不在年轻、老年代范畴内]</p>
+<p>查看gc日志<br>jvm自带了查看日志工具，终端里输入jconsole就会出现jdk自带的gui监控工具<br>还有阿里的arthas</p>
 
       
     </div>
