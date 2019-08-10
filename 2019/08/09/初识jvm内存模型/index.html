@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java学习,">
+  <meta name="keywords" content="jvm,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="摘要：主要介绍Collection的其中一种实现方式，List。">
-<meta name="keywords" content="Java学习">
+<meta name="description" content="摘要： 日常开发过程中，经常会碰到俩种错误：1，stackoverflowerror 2，outofmemoryerror 一般碰到这种错误的时候都会很迷茫，一般都会将不合理递归函数改一下，又或者将jvm的内存设置大一点，但是这么做不知道到底是不是最优方法，下面我们或粗略或详细的看一下引发这俩种错误的根本原因，下次碰到这些错误的时候就不会显得手足无措了。">
+<meta name="keywords" content="jvm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java集合之List">
-<meta property="og:url" content="/youbaaa.github.io/2017/08/11/Java集合之List/index.html">
+<meta property="og:title" content="初识jvm内存模型">
+<meta property="og:url" content="/youbaaa.github.io/2019/08/09/初识jvm内存模型/index.html">
 <meta property="og:site_name" content="vlsion_">
-<meta property="og:description" content="摘要：主要介绍Collection的其中一种实现方式，List。">
+<meta property="og:description" content="摘要： 日常开发过程中，经常会碰到俩种错误：1，stackoverflowerror 2，outofmemoryerror 一般碰到这种错误的时候都会很迷茫，一般都会将不合理递归函数改一下，又或者将jvm的内存设置大一点，但是这么做不知道到底是不是最优方法，下面我们或粗略或详细的看一下引发这俩种错误的根本原因，下次碰到这些错误的时候就不会显得手足无措了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-07T00:27:14.227Z">
+<meta property="og:updated_time" content="2019-08-10T02:20:08.606Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java集合之List">
-<meta name="twitter:description" content="摘要：主要介绍Collection的其中一种实现方式，List。">
+<meta name="twitter:title" content="初识jvm内存模型">
+<meta name="twitter:description" content="摘要： 日常开发过程中，经常会碰到俩种错误：1，stackoverflowerror 2，outofmemoryerror 一般碰到这种错误的时候都会很迷茫，一般都会将不合理递归函数改一下，又或者将jvm的内存设置大一点，但是这么做不知道到底是不是最优方法，下面我们或粗略或详细的看一下引发这俩种错误的根本原因，下次碰到这些错误的时候就不会显得手足无措了。">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="/youbaaa.github.io/2017/08/11/Java集合之List/">
+  <link rel="canonical" href="/youbaaa.github.io/2019/08/09/初识jvm内存模型/">
 
 
 
 
 
-  <title>Java集合之List | vlsion_</title>
+  <title>初识jvm内存模型 | vlsion_</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/youbaaa.github.io/2017/08/11/Java集合之List/">
+    <link itemprop="mainEntityOfPage" href="/youbaaa.github.io/2019/08/09/初识jvm内存模型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="vlsion_">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java集合之List</h1>
+          <h1 class="post-title" itemprop="name headline">初识jvm内存模型</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-11T11:25:33+08:00">
-                2017-08-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-09T16:41:35+08:00">
+                2019-08-09
               </time>
             
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java中级/" itemprop="url" rel="index">
-                    <span itemprop="name">Java中级</span>
+                  <a href="/categories/Java高级/" itemprop="url" rel="index">
+                    <span itemprop="name">Java高级</span>
                   </a>
                 </span>
 
@@ -352,20 +352,65 @@
       
 
       
-        <p>摘要：主要介绍Collection的其中一种实现方式，List。<br> <a id="more"></a></p>
-<h3 id="1-List接口"><a href="#1-List接口" class="headerlink" title="1.List接口"></a>1.List接口</h3><p>List是一个有序的集合，和set不同的是，List允许存储项的值为空，也允许存储相等值的存储项</p>
-<p>List是继承于Collection接口，除了Collection通用的方法以外，扩展了部分只属于List的方法。</p>
-<p>List比Collection主要多了几个add（…）方法和remove(…)方法的重载，还有几个index(…)， get(…)方法。<br>而AbstractList也只是实现了List接口部分的方法，和AbstractCollection是一个思路</p>
-<h3 id="2-ArraryList"><a href="#2-ArraryList" class="headerlink" title="2.ArraryList"></a>2.ArraryList</h3><p>ArrayList是一个数组实现的列表，由于数据是存入数组中的，所以它的特点也和数组一样，查询很快，但是中间部分的插入和删除很慢。</p>
-<h3 id="3-Vector"><a href="#3-Vector" class="headerlink" title="3.Vector"></a>3.Vector</h3><p>Vector就是ArrayList的线程安全版，它的方法前都加了synchronized锁，其他实现逻辑都相同。<br>如果对线程安全要求不高的话，可以选择ArrayList，毕竟synchronized也很耗性能</p>
-<h3 id="4-LinkedList"><a href="#4-LinkedList" class="headerlink" title="4.LinkedList"></a>4.LinkedList</h3><p>故名思意就是链表，和我们大学在数据结构里学的链表是一回事，LinkedList还是一个双向链表。<br>和C语言实现方式差不多，由于是双向链表，所以记录了next和prev，只不过把C语言里的指针换成了对象。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>通过上面对ArrayList和LinkedList的分析，可以理解List的3个特性 </p>
-<p>1.是按顺序查找 </p>
-<p>2.允许存储项为空 </p>
-<p>3.允许多个存储项的值相等 </p>
-<p>可以知其然知其所以然，然后对比LinkedList和ArrayList的实现方式不同，可以在不同的场景下使用不同的List </p>
-<p>ArrayList是由数组实现的，方便查找，返回数组下标对应的值即可，适用于多查找的场景 </p>
-<p>LinkedList由链表实现，插入和删除方便，适用于多次数据替换的场景</p>
+        <p>摘要：</p>
+<p>日常开发过程中，经常会碰到俩种错误：1，stackoverflowerror 2，outofmemoryerror 一般碰到这种错误的时候都会很迷茫，一般都会将不合理递归函数改一下，又或者将jvm的内存设置大一点，但是这么做不知道到底是不是最优方法，下面我们或粗略或详细的看一下引发这俩种错误的根本原因，下次碰到这些错误的时候就不会显得手足无措了。<br>    <a id="more"></a></p>
+<h3 id="计算机内存模型与jvm内存模型"><a href="#计算机内存模型与jvm内存模型" class="headerlink" title="计算机内存模型与jvm内存模型"></a>计算机内存模型与jvm内存模型</h3><p>jvm内存模型其实和计算机设计是大致相同的。在计算机运行的过程中，cpu跟内存的交互是最频繁的，但是计算机cpu的发展非常迅速，对于内存的读取速度已经远远赶不上cpu的速度,所以现在各厂商在cpu上增加了高速缓存。</p>
+<blockquote>
+<p><strong>每个cpu上的高速缓存分为L1，L2，L3，但是主内存只有一个。</strong><br><strong>cpu读取一个数据时，首先从一级缓存中查找，如果没有找到再从二级缓存中查找，如果还是没有就从三级缓存或内存中查找，每个cpu有且只有一套自己的缓存。</strong></p>
+</blockquote>
+<p>cpu的这种内存模型带来了一个问题，在多线程情况下，如果涉及到同一个内存区域，那么怎样保持<strong>缓存的一致性</strong>这里采用的是各处理器都遵守一种协议，来解决这个问题。具体的协议在此不细说（其实是因为我也不太清楚）。</p>
+<p>java程序的内存分配是在jvm虚拟机内存分配机制下完成的。java内存模型就是一种符合内存规范的，屏蔽了各硬件和操作系统之间差异的，保证java程序能在各种平台下都能效果一致的规范和机制。</p>
+<h3 id="java的内存区域"><a href="#java的内存区域" class="headerlink" title="java的内存区域"></a>java的内存区域</h3><p>根据java虚拟机规范，java虚拟机管理的内存可以分为五大部分：</p>
+<ul>
+<li>程序计数器<br>程序计数器在内存中占用很小的一块区域，可以理解为当前线程运行的行号指示器。属于线程私有。这里解释一下，当电脑有多核时，一个可执行代码可能有多个指令，为了每次线程的切换都会恢复到正确的执行位置，所以每个线程都有独立的程序计数器，之间互不影响。<strong>这一块的内存区域是不会出现内存溢出错误的。</strong></li>
+</ul>
+<hr>
+<ul>
+<li>java栈（stack）</li>
+</ul>
+<p>java栈也是线程私有。java程序运行时，每个方法被执行时都会在java栈中创建一个栈帧，每个栈帧中包含：局部变量表（也是我们常说的栈），操作栈，动态链接，方法出口等信息。方法被调用的过程就对应了栈帧在虚拟机中入栈和出栈的过程。（先进后出）。</p>
+<p>栈帧用来存储数据和部分运行过程结果的数据结构。</p>
+<p>注意，栈帧的大小是在编译期确定的，不随运行期数据影响。由于这个原因，才会出现开头说的俩个错误：</p>
+<blockquote>
+<p>1，stackoverflowerror：线程请求深度大于虚拟机所允许的<br>2，outofmemoryerror ：虚拟机栈大小可以动态拓展，当动态拓展申请不到足够的空间时，就会抛出这个错误。</p>
+</blockquote>
+<p>栈帧中局部变量表（通常我们说的栈）：是一片连续的内存空间，用来存放方法的从参数，包含java8大基本数据类型和对象引用数据类型，以及returnAddress类型。最小的局部变量表空间是slot，具体大小虚拟机没有指定，但是double和long这种64位的占用2个slot，其他占一个。</p>
+<p>对象引用：它是指向对象起始位的指针，也可能是指向对象的句柄，还有可能是其他的与对象有关的信息。</p>
+<p>returnAddress：是指向一条指令的地址。</p>
+<hr>
+<ul>
+<li>本地方法栈</li>
+</ul>
+<p>本地方法栈作用与java栈非常相似，区别是：java栈执行的是java方法服务，而本地方法栈执行的是为虚拟机服务的native方法，就是虚拟机底层实现的服务，jdk安装目录下有很多c编写的文件，可能就是native调用的c代码。</p>
+<hr>
+<ul>
+<li>堆（heap）</li>
+</ul>
+<p>堆是java虚拟机内存上最大的内存区域，因为它存放的对象是线程共享的，所以java在多线程编程下需要同步机制。</p>
+<p>java虚拟机规范是这样描述它的：所有对象的实例和数据都在堆上面分配内存。随着JIT（编译器）的发展（即时编译：可以将java字节码直接转换成发送服务器处理的程序）以及逃逸技术（分析实例变量是否要堆中分配，不在堆中分配可以直接在栈中分配，这样对象的指针可以全局被引用，或者其他线程共享）成熟。这种说话也不是那么绝对，但是大部分是这样的。</p>
+<p>根据虚拟机规范，Java堆可以存在物理上不连续的内存空间，就像磁盘空间只要逻辑是连续的即可。它的内存大小可以设为固定大小，也可以扩展。</p>
+<p>当前主流的虚拟机如HotPot都能按扩展实现(通过设置 -Xmx和-Xms)，如果堆中没有内存内存完成实例分配，而且堆无法扩展将报OOM错误(OutOfMemoryError)</p>
+<hr>
+<ul>
+<li>方法区</li>
+</ul>
+<p>也是线程共享的，用来存储已经被虚拟机加载过的类信息，常量，静态变量。example：被static修饰的变量加载类的时候就被加载到方法区中。</p>
+<p>方法区中还有运行常量池：class文件中除了有类的字段，接口，方法等信息，还有编译期生成的各种字面量和符号引用等信息。</p>
+<p>可通过 -XX:PermSize和-XX:MaxPermSize限制方法区大小。</p>
+<p>在jdk1.6及以前，方法区是被放在永久代的，因为没有强制方法区必须实现回收，hotspot虚拟机用永久代实现方法区，jvm的垃圾回收器可以像管理堆区一样管理这部分区域，从而不会专门为此区域设计垃圾回收机制，但是从jdk1.7之后这部分就从永久代移除了。也开始逐步废弃永久代了，jdk1.8开始废弃了永久代，改为元空间</p>
+<hr>
+<h3 id="GC"><a href="#GC" class="headerlink" title="GC"></a>GC</h3><p>对象的内存分配在java虚拟机的自动内存分配机制下，一般不容易出现内存泄漏问题。但是写代码难免会遇到一些特殊情况，比如OOM神马的。。尽管虚拟机内存的动态分配与内存回收技术很成熟，可万一出现了这样那样的内存溢出问题，那么将难以定位错误的原因所在所以了解一下gc是有必要的。</p>
+<p>我们带着三个问题来看一下：</p>
+<p>1.哪些内存要回收</p>
+<p>2.什么时候回收</p>
+<p>3.怎么回收</p>
+<p>上面讲到jvm的内存空间有五大类，其中 程序计数器，java栈，虚拟机栈这些都是线程私有的，随着线程生而生，线程亡而亡。但是堆，和方法区不一样，方法区存放的是类加载的信息，但是一个接口有多个实现类其需要的内存也不一样，还有在运行期才知道那个方法创建了多少内存需要多少，这部分回收和创建都是动态的，正式gc关注的。</p>
+<p>为了高效的回收jvm将堆分成了三个区域</p>
+<blockquote>
+<p>新生代：NewSize和MaxNewSize分别可以控制年轻代的初始大小和最大的大小<br>老年代：<br>永久代：jdk1.8以后采用元空间，它就不在堆中了。</p>
+</blockquote>
+<p>三大收集算法</p>
+<p>1.标记/清除算法【最基础】<br>2.复制算法<br>3.标记/整理算法<br>jvm采用<code>分代收集算法</code>对不同区域采用不同的回收算法。</p>
 
       
     </div>
@@ -383,7 +428,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java学习/" rel="tag"># Java学习</a>
+            <a href="/tags/jvm/" rel="tag"># jvm</a>
           
         </div>
       
@@ -396,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/08/Java对象初始化顺序探索/" rel="next" title="Java对象初始化顺序探索">
-                <i class="fa fa-chevron-left"></i> Java对象初始化顺序探索
+              <a href="/2019/08/08/高效插件之Cloud-Toolkit的介绍/" rel="next" title="高效插件之Cloud Toolkit的介绍">
+                <i class="fa fa-chevron-left"></i> 高效插件之Cloud Toolkit的介绍
               </a>
             
           </div>
@@ -405,10 +450,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/13/Java集合之Set/" rel="prev" title="Java集合之Set">
-                Java集合之Set <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -542,7 +583,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-List接口"><span class="nav-number">1.</span> <span class="nav-text">1.List接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-ArraryList"><span class="nav-number">2.</span> <span class="nav-text">2.ArraryList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Vector"><span class="nav-number">3.</span> <span class="nav-text">3.Vector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-LinkedList"><span class="nav-number">4.</span> <span class="nav-text">4.LinkedList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机内存模型与jvm内存模型"><span class="nav-number">1.</span> <span class="nav-text">计算机内存模型与jvm内存模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java的内存区域"><span class="nav-number">2.</span> <span class="nav-text">java的内存区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GC"><span class="nav-number">3.</span> <span class="nav-text">GC</span></a></li></ol></div>
             
 
           </div>
