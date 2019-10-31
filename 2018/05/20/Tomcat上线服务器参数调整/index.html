@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="一个野生程序猿的自我修养">
 <meta property="og:description" content="摘要：结合生产环境上线时的一些tomcat调整……">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-07T00:26:36.043Z">
+<meta property="og:updated_time" content="2019-10-31T08:41:19.888Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="性能优化之上线服务器参数调整">
 <meta name="twitter:description" content="摘要：结合生产环境上线时的一些tomcat调整……">
@@ -397,7 +397,13 @@ b) Spring-hibernate.xml中，hibernate.show_sql的值设置为false,hibernate.ge
     compressableMimeType=&quot;text/html,text/xml,text/javascript,text/css,text/plain&quot;
 
     redirectPort=&quot;8443&quot;/&gt;
-</code></pre><p>3，利用Druid监控分析有问题的数据库连接及sql</p>
+</code></pre><p>a、URIEncoding=“UTF-8”：设置Tomcat的字符集。这种配置我们一般是不会设置的，因为关于乱码的转换我们会在具体项目中具体处理，直接修改Tomcat的字符集未免过于太死板。</p>
+<p>b、maxThreads=“300”：设置当前Tomcat的最大并发数。Tomcat默认配置的最大请求数是150个，即同时能支持150个并发。但是在实际运用中，最大并发数与硬件性能和CPU数量都有很大关系的，更好的硬件、更高的处理器都会使Tomcat支持更多的并发数。如果一般在实际开发中，当某个应用拥有 250 个以上并发的时候，都会考虑到应用服务器的集群。</p>
+<p>c、minSpareThreads=“50”：设置当前Tomcat初始化时创建的线程数，默认值为25。</p>
+<p>d、acceptCount=“250”：当同时连接的人数达到maxThreads参数设置的值时，还可以接收排队的连接数量，超过这个连接的则直接返回拒绝连接。指定当任何能够使用的处理请求的线程数都被使用时，能够放到处理队列中的请求数，超过这个数的请求将不予处理。默认值为100。在实际应用中，如果想加大Tomcat的并发数 ，应该同时加大acceptCount和maxThreads的值。整编：微信公众号，搜云库技术团队，ID：souyunku</p>
+<p>e、enableLookups=“false”：是否开启域名反查，一般设置为false来提高处理能力，它的取值还有true，一般很少使用。</p>
+<p>f、maxKeepAliveRequests=“1”：nginx动态的转给tomcat，nginx是不能keepalive的，而tomcat端默认开启了keepalive，会等待keepalive的timeout，默认不设置就是使用connectionTimeout。所以必须设置tomcat的超时时间，并关闭tomcat的keepalive。否则会产生大量tomcat的socket timewait。maxKeepAliveRequests=”1”就可以避免tomcat产生大量的TIME_WAIT连接，从而从一定程度上避免tomcat假死。</p>
+<p>3，利用Druid监控分析有问题的数据库连接及sql</p>
 <pre><code>web.xml中配置Druid监控的Servlet
 
      &lt;servlet&gt;
@@ -542,7 +548,7 @@ b) Spring-hibernate.xml中，hibernate.show_sql的值设置为false,hibernate.ge
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -564,7 +570,7 @@ b) Spring-hibernate.xml中，hibernate.show_sql的值设置为false,hibernate.ge
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
