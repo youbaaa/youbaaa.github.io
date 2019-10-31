@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="一个野生程序猿的自我修养">
 <meta property="og:description" content="摘要：结合生产环境上线时的一些tomcat调整……">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-31T08:41:19.888Z">
+<meta property="og:updated_time" content="2019-10-31T08:53:06.934Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="性能优化之上线服务器参数调整">
 <meta name="twitter:description" content="摘要：结合生产环境上线时的一些tomcat调整……">
@@ -381,7 +381,18 @@ b) Spring-hibernate.xml中，hibernate.show_sql的值设置为false,hibernate.ge
 
 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC  -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection
 
--XX:LargePageSizeInBytes=128m  -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:-UseLoopPredicate</code></pre><p>（windows系统在文件在conf/server.xml，主要设置最大线程（并发数））</p>
+-XX:LargePageSizeInBytes=128m  -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:-UseLoopPredicate</code></pre><p>1、-Xmx512m：设置Java虚拟机的堆的最大可用内存大小，单位：兆(m)，整个堆大小=年轻代大小 + 年老代大小 + 持久代大小。持久代一般固定大小为64m。堆的不同分布情况，对系统会产生一定的影响。尽可能将对象预留在新生代，减少老年代GC的次数（通常老年回收起来比较慢）。实际工作中，通常将堆的初始值和最大值设置相等，这样可以减少程序运行时进行的垃圾回收次数和空间扩展，从而提高程序性能。整编：微信公众号，搜云库技术团队，ID：souyunku</p>
+<p>2、-Xms512m：设置Java虚拟机的堆的初始值内存大小，单位：兆(m)，此值可以设置与-Xmx相同，以避免每次垃圾回收完成后JVM重新分配内存。</p>
+<p>3、-Xmn170m：设置年轻代内存大小，单位：兆(m)，此值对系统性能影响较大，Sun官方推荐配置为整个堆的3/8。一般在增大年轻代内存后，也会将会减小年老代大小。</p>
+<p>4、-Xss128k：设置每个线程的栈大小。JDK5.0以后每个线程栈大小为1M，以前每个线程栈大小为256K。更具应用的线程所需内存大小进行调整。</p>
+<p>在相同物理内存下，减小这个值能生成更多的线程。但是操作系统对一个进程内的线程数还是有限制的，不能无限生成，经验值在3000~5000左右。</p>
+<p>5、-XX:NewRatio=4：设置年轻代（包括Eden和两个Survivor区）与年老代的比值（除去持久代）。设置为4，则年轻代与年老代所占比值为1：4，年轻代占整个堆栈的1/5 。</p>
+<p>6、-XX:SurvivorRatio=4：设置年轻代中Eden区与Survivor区的大小比值。设置为4，则两个Survivor区与一个Eden区的比值为2:4，一个Survivor区占整个年轻代的1/6。</p>
+<p>7、-XX:MaxPermSize=16m：设置持久代大小为16m，上面也说了，持久代一般固定的内存大小为64m。</p>
+<p>8、-XX:MaxTenuringThreshold=0：设置垃圾最大年龄。</p>
+<p>如果设置为0的话，则年轻代对象不经过Survivor区，直接进入年老代。对于年老代比较多的应用，可以提高效率。</p>
+<p>如果将此值设置为一个较大值，则年轻代对象会在Survivor区进行多次复制，这样可以增加对象再年轻代的存活时间，增加在年轻代即被回收的概论。</p>
+<p>（windows系统在文件在conf/server.xml，主要设置最大线程（并发数））</p>
 <pre><code>&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;
 
     URIEncoding=&quot;UTF-8&quot;  minSpareThreads=&quot;25&quot; maxSpareThreads=&quot;75&quot;
