@@ -87,10 +87,12 @@
 <meta property="og:site_name" content="一个野生程序猿的自我修养">
 <meta property="og:description" content="摘要：结合生产环境上线时的一些tomcat调整……">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-31T08:53:06.934Z">
+<meta property="og:image" content="/uploads/tomcatJvm.jpg">
+<meta property="og:updated_time" content="2019-10-31T09:09:56.024Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="性能优化之上线服务器参数调整">
 <meta name="twitter:description" content="摘要：结合生产环境上线时的一些tomcat调整……">
+<meta name="twitter:image" content="/uploads/tomcatJvm.jpg">
 
 
 
@@ -355,33 +357,18 @@
         <p>摘要：结合生产环境上线时的一些tomcat调整……<br> <a id="more"></a></p>
 <h3 id="1-项目参数调整"><a href="#1-项目参数调整" class="headerlink" title="1.项目参数调整"></a>1.项目参数调整</h3><pre><code>a) log4j.properties日志级别调整，一般生产环境需要将log4j.rootLogger设置为ERROR，如果需要警告级别的信息，也是可以设置成WARN;
 
-b) Spring-hibernate.xml中，hibernate.show_sql的值设置为false,hibernate.generate_statistics的值设置为false(console输出内容过多时,会导致应用异常卡顿)。</code></pre><h3 id="2-应用服务器参数调整（tomcat）"><a href="#2-应用服务器参数调整（tomcat）" class="headerlink" title="2.应用服务器参数调整（tomcat）"></a>2.应用服务器参数调整（tomcat）</h3><p>JVM参数设置,windows环境将以下参数添加到TOMCAT_HOME/bin/catalina.bat中(linux下为catalina.sh)）</p>
-<p>添加set “JAVA_OPTS=-server -Xms4096m -Xmx4096m -XX:PermSize=256M -XX:MaxPermSize=512m -XX:NewSize=256m -XX:MaxNewSize=512m”</p>
-<p>各参数含义：</p>
-<pre><code>-server//服务器模式（类似于高性能模式~）；
--Xms4096m //JVM初始分配的堆内存，一般和Xmx配置成一样以避免每次gc后JVM重新分配内存；
-
--Xmx4096m //JVM最大允许分配的堆内存，按需分配；
--Xmn512m //年轻代内存大小，整个JVM内存=年轻代 + 年老代 + 持久代；
--XX:PermSize=256m //持久代内存大小；
-
--XX:MaxPermSize=512m //最大持久代大小；
--Xss256k //设置每个线程的堆栈大小；
--XX:+DisableExplicitGC //忽略手动调用GC, System.gc()的调用就会变成一个空调用，完全不触发GC；
--XX:+UseConcMarkSweepGC //并发标记清除（CMS）收集器；
--XX:+CMSParallelRemarkEnabled //降低标记停顿；
--XX:+UseCMSCompactAtFullCollection //在FULL GC的时候对年老代的压缩；
--XX:LargePageSizeInBytes=128m //内存页的大小；
--XX:+UseFastAccessorMethods //原始类型的快速优化；
--XX:+UseCMSInitiatingOccupancyOnly //使用手动定义初始化定义开始CMS收集；
--XX:CMSInitiatingOccupancyFraction=70 //使用cms作为垃圾回收使用70％后开始CMS收集；
-
--XX:-UseLoopPredicate//java7非update版本需要设置此参数,否则会有应用服务器宕机风险,若发现应用服务器自动关闭,很大可能是因为此bug；</code></pre><p>生产(线上)环境配置参考:</p>
-<pre><code>-server -Xms8G -Xmx8G -XX:PermSize=480M -XX:MaxPermSize=2G -XX:+DisableExplicitGC -XX:MaxTenuringThreshold=31
-
--XX:+UseConcMarkSweepGC -XX:+UseParNewGC  -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection
-
--XX:LargePageSizeInBytes=128m  -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:-UseLoopPredicate</code></pre><p>1、-Xmx512m：设置Java虚拟机的堆的最大可用内存大小，单位：兆(m)，整个堆大小=年轻代大小 + 年老代大小 + 持久代大小。持久代一般固定大小为64m。堆的不同分布情况，对系统会产生一定的影响。尽可能将对象预留在新生代，减少老年代GC的次数（通常老年回收起来比较慢）。实际工作中，通常将堆的初始值和最大值设置相等，这样可以减少程序运行时进行的垃圾回收次数和空间扩展，从而提高程序性能。整编：微信公众号，搜云库技术团队，ID：souyunku</p>
+b) Spring-hibernate.xml中，hibernate.show_sql的值设置为false,hibernate.generate_statistics的值设置为false(console输出内容过多时,会导致应用异常卡顿)。</code></pre><h3 id="2-应用服务器参数调整（tomcat）"><a href="#2-应用服务器参数调整（tomcat）" class="headerlink" title="2.应用服务器参数调整（tomcat）"></a>2.应用服务器参数调整（tomcat）</h3><p>Tomcat性能调优<br>找到Tomcat根目录下的conf目录，修改server.xml文件的内容。对于这部分的调优，我所了解到的就是无非设置一下Tomcat服务器的最大并发数和Tomcat初始化时创建的线程数的设置，当然还有其他一些性能调优的设置，下图是我根据我机子的性能设置的一些参数值，给各位详细解释一下吧：</p>
+<p>1、URIEncoding=“UTF-8”：设置Tomcat的字符集。这种配置我们一般是不会设置的，因为关于乱码的转换我们会在具体项目中具体处理，直接修改Tomcat的字符集未免过于太死板。</p>
+<p>2、maxThreads=“300”：设置当前Tomcat的最大并发数。Tomcat默认配置的最大请求数是150个，即同时能支持150个并发。但是在实际运用中，最大并发数与硬件性能和CPU数量都有很大关系的，更好的硬件、更高的处理器都会使Tomcat支持更多的并发数。如果一般在实际开发中，当某个应用拥有 250 个以上并发的时候，都会考虑到应用服务器的集群。</p>
+<p>3、minSpareThreads=“50”：设置当前Tomcat初始化时创建的线程数，默认值为25。</p>
+<p>4、acceptCount=“250”：当同时连接的人数达到maxThreads参数设置的值时，还可以接收排队的连接数量，超过这个连接的则直接返回拒绝连接。指定当任何能够使用的处理请求的线程数都被使用时，能够放到处理队列中的请求数，超过这个数的请求将不予处理。默认值为100。在实际应用中，如果想加大Tomcat的并发数 ，应该同时加大acceptCount和maxThreads的值。整编：微信公众号，搜云库技术团队，ID：souyunku</p>
+<p>5、enableLookups=“false”：是否开启域名反查，一般设置为false来提高处理能力，它的取值还有true，一般很少使用。</p>
+<p>6、maxKeepAliveRequests=“1”：nginx动态的转给tomcat，nginx是不能keepalive的，而tomcat端默认开启了keepalive，会等待keepalive的timeout，默认不设置就是使用connectionTimeout。所以必须设置tomcat的超时时间，并关闭tomcat的keepalive。否则会产生大量tomcat的socket timewait。maxKeepAliveRequests=”1”就可以避免tomcat产生大量的TIME_WAIT连接，从而从一定程度上避免tomcat假死。</p>
+<p>JVM性能调优</p>
+<p>Tomcat本身还是运行在JVM上的，通过对JVM参数的调整我们可以使Tomcat拥有更好的性能。目前针对JVM的调优主要有两个方面：内存调优和垃圾回收策略调优。</p>
+<p>一、内存调优<br>找到Tomcat根目录下的bin目录，设置catalina.sh文件中JAVA_OPTS变量即可，因为后面的启动参数会把JAVA_OPTS作为JVM的启动参数来处理。再说Java虚拟机的内存结构是有点复杂的，相信很多人在理解上都是很抽象的，它主要分为堆、栈、方法区和垃圾回收系统等几个部分组成，下面是我从网上扒的内存结构图：</p>
+<p>内存调优这块呢，无非就是通过修改它们各自的内存空间的大小，使应用能够更加合理的运用，下图是我根据我机子的性能设置的参数，给各位详细解释一下各个参数的含义吧：</p>
+<p>1、-Xmx512m：设置Java虚拟机的堆的最大可用内存大小，单位：兆(m)，整个堆大小=年轻代大小 + 年老代大小 + 持久代大小。持久代一般固定大小为64m。堆的不同分布情况，对系统会产生一定的影响。尽可能将对象预留在新生代，减少老年代GC的次数（通常老年回收起来比较慢）。实际工作中，通常将堆的初始值和最大值设置相等，这样可以减少程序运行时进行的垃圾回收次数和空间扩展，从而提高程序性能。整编：微信公众号，搜云库技术团队，ID：souyunku</p>
 <p>2、-Xms512m：设置Java虚拟机的堆的初始值内存大小，单位：兆(m)，此值可以设置与-Xmx相同，以避免每次垃圾回收完成后JVM重新分配内存。</p>
 <p>3、-Xmn170m：设置年轻代内存大小，单位：兆(m)，此值对系统性能影响较大，Sun官方推荐配置为整个堆的3/8。一般在增大年轻代内存后，也会将会减小年老代大小。</p>
 <p>4、-Xss128k：设置每个线程的栈大小。JDK5.0以后每个线程栈大小为1M，以前每个线程栈大小为256K。更具应用的线程所需内存大小进行调整。</p>
@@ -392,28 +379,20 @@ b) Spring-hibernate.xml中，hibernate.show_sql的值设置为false,hibernate.ge
 <p>8、-XX:MaxTenuringThreshold=0：设置垃圾最大年龄。</p>
 <p>如果设置为0的话，则年轻代对象不经过Survivor区，直接进入年老代。对于年老代比较多的应用，可以提高效率。</p>
 <p>如果将此值设置为一个较大值，则年轻代对象会在Survivor区进行多次复制，这样可以增加对象再年轻代的存活时间，增加在年轻代即被回收的概论。</p>
-<p>（windows系统在文件在conf/server.xml，主要设置最大线程（并发数））</p>
-<pre><code>&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;
-
-    URIEncoding=&quot;UTF-8&quot;  minSpareThreads=&quot;25&quot; maxSpareThreads=&quot;75&quot;
-
-    enableLookups=&quot;false&quot; disableUploadTimeout=&quot;true&quot; connectionTimeout=&quot;20000&quot;
-
-    acceptCount=&quot;800&quot;  maxThreads=&quot;800&quot; maxProcessors=&quot;1000&quot; minProcessors=&quot;5&quot;
-
-    useURIValidationHack=&quot;false&quot;
-
-    compression=&quot;on&quot; compressionMinSize=&quot;2048&quot;
-
-    compressableMimeType=&quot;text/html,text/xml,text/javascript,text/css,text/plain&quot;
-
-    redirectPort=&quot;8443&quot;/&gt;
-</code></pre><p>a、URIEncoding=“UTF-8”：设置Tomcat的字符集。这种配置我们一般是不会设置的，因为关于乱码的转换我们会在具体项目中具体处理，直接修改Tomcat的字符集未免过于太死板。</p>
-<p>b、maxThreads=“300”：设置当前Tomcat的最大并发数。Tomcat默认配置的最大请求数是150个，即同时能支持150个并发。但是在实际运用中，最大并发数与硬件性能和CPU数量都有很大关系的，更好的硬件、更高的处理器都会使Tomcat支持更多的并发数。如果一般在实际开发中，当某个应用拥有 250 个以上并发的时候，都会考虑到应用服务器的集群。</p>
-<p>c、minSpareThreads=“50”：设置当前Tomcat初始化时创建的线程数，默认值为25。</p>
-<p>d、acceptCount=“250”：当同时连接的人数达到maxThreads参数设置的值时，还可以接收排队的连接数量，超过这个连接的则直接返回拒绝连接。指定当任何能够使用的处理请求的线程数都被使用时，能够放到处理队列中的请求数，超过这个数的请求将不予处理。默认值为100。在实际应用中，如果想加大Tomcat的并发数 ，应该同时加大acceptCount和maxThreads的值。整编：微信公众号，搜云库技术团队，ID：souyunku</p>
-<p>e、enableLookups=“false”：是否开启域名反查，一般设置为false来提高处理能力，它的取值还有true，一般很少使用。</p>
-<p>f、maxKeepAliveRequests=“1”：nginx动态的转给tomcat，nginx是不能keepalive的，而tomcat端默认开启了keepalive，会等待keepalive的timeout，默认不设置就是使用connectionTimeout。所以必须设置tomcat的超时时间，并关闭tomcat的keepalive。否则会产生大量tomcat的socket timewait。maxKeepAliveRequests=”1”就可以避免tomcat产生大量的TIME_WAIT连接，从而从一定程度上避免tomcat假死。</p>
+<p>二、垃圾回收策略调优<br>找到Tomcat根目录下的bin目录，也是设置catalina.sh文件中JAVA_OPTS变量即可。我们都知道Java虚拟机都有默认的垃圾回收机制，但是不同的垃圾回收机制的效率是不同的，正是因为这点我们才经常对Java虚拟机的垃圾回收策略进行相应的调整。下面也是通过我的一些需求来配置的垃圾回收策略：</p>
+<p>Java虚拟机的垃圾回收策略一般分为：串行收集器、并行收集器和并发收集器。</p>
+<p>串行收集器：</p>
+<p>1、-XX:+UseSerialGC：代表垃圾回收策略为串行收集器，即在整个扫描和复制过程采用单线程的方式来进行，适用于单CPU、新生代空间较小及对暂停时间要求不是非常高的应用上，是client级别默认的GC方式，主要在JDK1.5之前的垃圾回收方式。</p>
+<p>并发收集器：</p>
+<p>1、-XX:+UseParallelGC：代表垃圾回收策略为并行收集器(吞吐量优先)，即在整个扫描和复制过程采用多线程的方式来进行，适用于多CPU、对暂停时间要求较短的应用上，是server级别默认采用的GC方式。此配置仅对年轻代有效。该配置只能让年轻代使用并发收集，而年老代仍旧使用串行收集。整编：微信公众号，搜云库技术团队，ID：souyunku</p>
+<p>2、-XX:ParallelGCThreads=4：配置并行收集器的线程数，即：同时多少个线程一起进行垃圾回收。此值最好配置与处理器数目相等。</p>
+<p>3、-XX:+UseParallelOldGC：配置年老代垃圾收集方式为并行收集。JDK6.0支持对年老代并行收集 。</p>
+<p>4、-XX:MaxGCPauseMillis=100：设置每次年轻代垃圾回收的最长时间，如果无法满足此时间，JVM会自动调整年轻代大小，以满足此值。</p>
+<p>5、-XX:+UseAdaptiveSizePolicy：设置此选项后，并行收集器会自动选择年轻代区大小和相应的Survivor区比例，以达到目标系统规定的最低相应时间或者收集频率等，此值建议使用并行收集器时，一直打开。</p>
+<p>并发收集器：</p>
+<p>1、-XX:+UseConcMarkSweepGC:代表垃圾回收策略为并发收集器。</p>
+<p>好了，到此我对虚拟机的垃圾回收策略总结就这么多，还是这句话：优化的学习一直在路上，下面还有一张从其他博客中偷到的图，据说以上三种GC机制是需要配合使用的。</p>
+<p><img src="/uploads/tomcatJvm.jpg" alt="avatar"></p>
 <p>3，利用Druid监控分析有问题的数据库连接及sql</p>
 <pre><code>web.xml中配置Druid监控的Servlet
 
