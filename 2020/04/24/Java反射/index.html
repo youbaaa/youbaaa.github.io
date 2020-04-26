@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="数据结构,">
+  <meta name="keywords" content="Java学习,">
 
 
 
@@ -79,24 +79,18 @@
 
 
 
-<meta name="description" content="摘要：     维基百科对B树的定义为“在计算机科学中，B树（B-tree）是一种树状数据结构，它能够存储数据、对其进行排序并允许以O(log n)的时间复杂度运行进行查找、顺序读取、插入和删除的数据结构。B树，概括来说是一个节点可以拥有多于2个子节点的二叉查找树。与自平衡二叉查找树不同，B-树为系统最优化大块数据的读和写操作。B-tree算法减少定位记录时所经历的中间过程，从而加快存取速度。普遍">
-<meta name="keywords" content="数据结构">
+<meta name="description" content="摘要：Java中的反射机制是指在运行过程状态中，对于任意的一个类，都能知道这个类的所有属性和方法；并且对于任意一个对象，都能够调用它的任意一个方法。这种动态获取信息及动态调用对象方法的功能称为Java语言的反射机制。">
+<meta name="keywords" content="Java学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据结构之B树与B+树">
-<meta property="og:url" content="/youbaaa.github.io/2018/12/11/数据结构之B树与B-树/index.html">
+<meta property="og:title" content="Java反射">
+<meta property="og:url" content="/youbaaa.github.io/2020/04/24/Java反射/index.html">
 <meta property="og:site_name" content="vlsion&#39;手记">
-<meta property="og:description" content="摘要：     维基百科对B树的定义为“在计算机科学中，B树（B-tree）是一种树状数据结构，它能够存储数据、对其进行排序并允许以O(log n)的时间复杂度运行进行查找、顺序读取、插入和删除的数据结构。B树，概括来说是一个节点可以拥有多于2个子节点的二叉查找树。与自平衡二叉查找树不同，B-树为系统最优化大块数据的读和写操作。B-tree算法减少定位记录时所经历的中间过程，从而加快存取速度。普遍">
+<meta property="og:description" content="摘要：Java中的反射机制是指在运行过程状态中，对于任意的一个类，都能知道这个类的所有属性和方法；并且对于任意一个对象，都能够调用它的任意一个方法。这种动态获取信息及动态调用对象方法的功能称为Java语言的反射机制。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="/uploads/btree1.png">
-<meta property="og:image" content="/uploads/btreebuild.gif">
-<meta property="og:image" content="/uploads/btree2.png">
-<meta property="og:image" content="/uploads/Bplustreebuild.gif">
-<meta property="og:image" content="/uploads/btree3.png">
-<meta property="og:updated_time" content="2019-08-07T01:03:17.138Z">
+<meta property="og:updated_time" content="2020-04-26T01:35:33.442Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据结构之B树与B+树">
-<meta name="twitter:description" content="摘要：     维基百科对B树的定义为“在计算机科学中，B树（B-tree）是一种树状数据结构，它能够存储数据、对其进行排序并允许以O(log n)的时间复杂度运行进行查找、顺序读取、插入和删除的数据结构。B树，概括来说是一个节点可以拥有多于2个子节点的二叉查找树。与自平衡二叉查找树不同，B-树为系统最优化大块数据的读和写操作。B-tree算法减少定位记录时所经历的中间过程，从而加快存取速度。普遍">
-<meta name="twitter:image" content="/uploads/btree1.png">
+<meta name="twitter:title" content="Java反射">
+<meta name="twitter:description" content="摘要：Java中的反射机制是指在运行过程状态中，对于任意的一个类，都能知道这个类的所有属性和方法；并且对于任意一个对象，都能够调用它的任意一个方法。这种动态获取信息及动态调用对象方法的功能称为Java语言的反射机制。">
 
 
 
@@ -126,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="/youbaaa.github.io/2018/12/11/数据结构之B树与B-树/">
+  <link rel="canonical" href="/youbaaa.github.io/2020/04/24/Java反射/">
 
 
 
 
 
-  <title>数据结构之B树与B+树 | vlsion'手记</title>
+  <title>Java反射 | vlsion'手记</title>
   
 
 
@@ -269,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/youbaaa.github.io/2018/12/11/数据结构之B树与B-树/">
+    <link itemprop="mainEntityOfPage" href="/youbaaa.github.io/2020/04/24/Java反射/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="vlsion_">
@@ -286,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">数据结构之B树与B+树</h1>
+          <h1 class="post-title" itemprop="name headline">Java反射</h1>
         
 
         <div class="post-meta">
@@ -298,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-11T10:01:40+08:00">
-                2018-12-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-24T11:04:43+08:00">
+                2020-04-24
               </time>
             
 
@@ -321,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
+                  <a href="/categories/Java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
                   </a>
                 </span>
 
@@ -339,8 +333,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/12/11/数据结构之B树与B-树/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/11/数据结构之B树与B-树/" itemprop="commentCount"></span>
+                <a href="/2020/04/24/Java反射/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/04/24/Java反射/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -348,7 +342,7 @@
 
           
           
-             <span id="/2018/12/11/数据结构之B树与B-树/" class="leancloud_visitors" data-flag-title="数据结构之B树与B+树">
+             <span id="/2020/04/24/Java反射/" class="leancloud_visitors" data-flag-title="Java反射">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -379,29 +373,15 @@
       
 
       
-        <p>摘要：     维基百科对B树的定义为“在计算机科学中，B树（B-tree）是一种树状数据结构，它能够存储数据、对其进行排序并允许以O(log n)的时间复杂度运行进行查找、顺序读取、插入和删除的数据结构。B树，概括来说是一个节点可以拥有多于2个子节点的二叉查找树。与自平衡二叉查找树不同，B-树为系统最优化大块数据的读和写操作。B-tree算法减少定位记录时所经历的中间过程，从而加快存取速度。普遍运用在数据库和文件系统。”</p>
- <a id="more"></a>
+        <p>摘要：Java中的反射机制是指在运行过程状态中，对于任意的一个类，都能知道这个类的所有属性和方法；并且对于任意一个对象，都能够调用它的任意一个方法。这种动态获取信息及动态调用对象方法的功能称为Java语言的反射机制。</p>
+<a id="more"></a>
+<h3 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h3><p>反射机制所需的类主要有java.lang包中的Class类和java.lang.reflect包中的Constructor类、Field类、Method类和Parameter类。Class类是一个比较特殊的类，它是反射机制的基础，Class类的对象表示正在运行的Java程序中的类或接口，也就是任何一个类被加载时，即将类的.class文件（字节码文件）读入内存的同时，都自动为之创建一个java.lang.Class对象。Class类没有公共构造方法，其对象是JVM在加载类时通过调用类加载器中的defineClass（）方法创建的，因此不能显式地创建一个Class对象。通过这个Class对象，才可以获得该对象的其他信息。</p>
+<p>说明：通过getFields（）和getMethods（）方法获得权限为public成员变量和成员方法时，还包括从父类继承得到的成员变量和成员方法；而通过getDeclaredFields（）和getDeclaredMethods（）方法只是获得在本类中定义的所有成员变量和成员方法。</p>
+<h3 id="获取类的方式"><a href="#获取类的方式" class="headerlink" title="获取类的方式"></a>获取类的方式</h3><p>每个类被加载之后，系统都会为该类生成一个对应的Class对象，通过Class对象就可以访问到JVM中该类的信息，一旦类被加载到JVM中，同一个类将不会被再次载入。被载入JVM的类都有一个唯一标识就是该类的全名，即包括包名和类名。在Java中程序获得Class对象有如下3种方式。<br>（1）使用Class类的静态方法forName（String className），其中参数className表示所需类的全名。如“Class cObj=Class.forName（”java.lang.String”）；”。另外，forName（）方法声明抛出ClassNotFoundException异常，因此调用该方法时必须捕获或抛出该异常。<br>（2）用类名调用该类的class属性来获得该类对应的Class对象，即“类名.class”。如，语句“ClasscObj=Cylinder.class；”将返回Cylinder类所对应的Class对象赋给cObj变量。<br>（3）用对象调用getClass（）方法来获得该类对应的Class对象，即“对象.getClass（）”。该方法是Object类中的一个方法，因此所有对象调用该方法都可以返回所属类对应的Class对象。如例8.8中的语句“Person per=new Person（“张三”）；”可以通过以下语句返回该类的Class对象：Class cObj=per.getClass();</p>
+<h3 id="反射包reflect中的常用类"><a href="#反射包reflect中的常用类" class="headerlink" title="反射包reflect中的常用类"></a>反射包reflect中的常用类</h3><p>反射机制中除了上面介绍的java.lang包中的Class类之外，还需要java.lang.reflect包中的Constructor类、Method类、Field类和Parameter类。Java 8以后在java.lang.reflect包中新增了一个Executable抽象类，该类对象代表可执行的类成员。Executable抽象类派生了Constructor和Method两个子类。<br>java.lang.reflect.Executable类提供了大量方法用来获取参数、修饰符或注解等信息，</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">import org.slf4j.Logger;</span><br><span class="line">import org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @Description:调用函数的工具类</span><br><span class="line"> * @Author: ZhangHuang</span><br><span class="line"> * @Date: 2020/4/24 09:29</span><br><span class="line"> */</span><br><span class="line">public class CallSpecialFunUntil &#123;</span><br><span class="line">    private final static Logger logger = LoggerFactory.getLogger(CallSpecialFunUntil.class);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 利用反射通过类名和方法名，传递参数类型和参数调用</span><br><span class="line">     *</span><br><span class="line">     * @param classAndMethod 类的全路径+&quot;-&quot;+方法名</span><br><span class="line">     * @param paramTypes     调用方法的参数类型列表（方法可能重载）</span><br><span class="line">     * @param params         调用方法的参数列表</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static Object callFun(String classAndMethod, Class[] paramTypes, Object[] params) &#123;</span><br><span class="line">        String[] args = classAndMethod.split(&quot;-&quot;);</span><br><span class="line">        String className = args[0];</span><br><span class="line">        String method = args[1];</span><br><span class="line">        try &#123;</span><br><span class="line">            Class clazz = Class.forName(className);</span><br><span class="line">            Method method1 = clazz.getMethod(method, paramTypes);</span><br><span class="line">            Object result = method1.invoke(clazz.newInstance(), params);</span><br><span class="line">            return result;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            logger.error(&quot;类或方法找不到或其他动态代理错误...&quot;, &quot;&quot;, e);</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Class[] paramTypes = &#123;String.class,String.class&#125;;</span><br><span class="line">        Object[] params = &#123;&quot;18&quot;,&quot;25&quot;&#125;;</span><br><span class="line">        Object res =  CallSpecialFunUntil.callFun(&quot;hrqc.api.function.RuleFunction-suggestBmi&quot;,paramTypes,params);</span><br><span class="line">        System.out.println(res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>定义</strong></p>
-<p>B 树可以看作是对2-3查找树的一种扩展，即他允许每个节点有M-1个子节点。</p>
-<p>根节点至少有两个子节点</p>
-<p>每个节点有M-1个key，并且以升序排列</p>
-<p>位于M-1和M key的子节点的值位于M-1 和M key对应的Value之间</p>
-<p>其它节点至少有M/2个子节点</p>
-<p>下图是一个M=4 阶的B树:</p>
-<p><img src="/uploads/btree1.png" alt="avatar"></p>
-<p>可以看到B树是2-3树的一种扩展，他允许一个节点有多于2个的元素。</p>
-<p>B树的插入及平衡化操作和2-3树很相似，这里就不介绍了。下面是往B树中依次插入</p>
-<p>6 10 4 14 5 11 15 3 2 12 1 7 8 8 6 3 6 21 5 15 15 6 32 23 45 65 7 8 6 5 4</p>
-<p>的演示动画：</p>
-<p><img src="/uploads/btreebuild.gif" alt="avatar"></p>
-<p>B+树是对B树的一种变形树，它与B树的差异在于：</p>
-<p>有k个子结点的结点必然有k个关键码；<br>非叶结点仅具有索引作用，跟记录有关的信息均存放在叶结点中。<br>树的所有叶结点构成一个有序链表，可以按照关键码排序的次序遍历全部记录。<br>如下图，是一个B+树:</p>
-<p><img src="/uploads/btree2.png" alt="avatar"><br>下图是B+树的插入动画：<br><img src="/uploads/Bplustreebuild.gif" alt="avatar"></p>
-<p>B和B+树的区别在于，B+树的非叶子结点只包含导航信息，不包含实际的值，所有的叶子结点和相连的节点使用链表相连，便于区间查找和遍历。</p>
-<p>B+ 树的优点在于：</p>
-<p>由于B+树在内部节点上不包含数据信息，因此在内存页中能够存放更多的key。 数据存放的更加紧密，具有更好的空间局部性。因此访问叶子节点上关联的数据也具有更好的缓存命中率。<br>B+树的叶子结点都是相链的，因此对整棵树的便利只需要一次线性遍历叶子结点即可。而且由于数据顺序排列并且相连，所以便于区间查找和搜索。而B树则需要进行每一层的递归遍历。相邻的元素可能在内存中不相邻，所以缓存命中性没有B+树好。<br>但是B树也有优点，其优点在于，由于B树的每一个节点都包含key和value，因此经常访问的元素可能离根节点更近，因此访问也更迅速。</p>
-<p>下面是B 树和B+树的区别图：<br><img src="/uploads/btree3.png" alt="avatar"></p>
+<p>该实例就是通过类名获取Clazz 然后通过方法名和参数获取Class中的方法，然后获取的方法执行动态代理，产生结果～</p>
 
       
     </div>
@@ -419,7 +399,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+            <a href="/tags/Java学习/" rel="tag"># Java学习</a>
           
         </div>
       
@@ -432,8 +412,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/15/Java之IO流/" rel="next" title="Java之IO流">
-                <i class="fa fa-chevron-left"></i> Java之IO流
+              <a href="/2020/04/03/JVM内存模型图解/" rel="next" title="JVM内存模型图解">
+                <i class="fa fa-chevron-left"></i> JVM内存模型图解
               </a>
             
           </div>
@@ -441,10 +421,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/10/数据库索引/" rel="prev" title="数据库索引">
-                数据库索引 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -499,8 +475,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -562,6 +547,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Class类"><span class="nav-number">1.</span> <span class="nav-text">Class类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取类的方式"><span class="nav-number">2.</span> <span class="nav-text">获取类的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反射包reflect中的常用类"><span class="nav-number">3.</span> <span class="nav-text">反射包reflect中的常用类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">4.</span> <span class="nav-text">实例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
