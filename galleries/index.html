@@ -23,7 +23,7 @@
   
 
   
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/vision2best/note/css/style.css">
 
 
   
@@ -264,7 +264,7 @@
   
   
     
-<script src="/js/color-mode.js"></script>
+<script src="/vision2best/note/js/color-mode.js"></script>
 
   
   
@@ -296,8 +296,8 @@
 
 
 
-<script src="/js/utils.js"></script>
-<script src="/js/script.js"></script>
+<script src="/vision2best/note/js/utils.js"></script>
+<script src="/vision2best/note/js/script.js"></script>
 
 
 
@@ -325,7 +325,7 @@
     }
 
     const addCount = (Counter) => {
-      const url = $(".leancloud-counter").length === 1 ? $(".leancloud-counter").attr('id').trim() : 'http://example.com';
+      const url = $(".leancloud-counter").length === 1 ? $(".leancloud-counter").attr('id').trim() : 'https://gitee.com/vision2best/note';
       var query = new Counter;
       query.save({
         words: url
@@ -344,7 +344,7 @@
     }
 
     const addLike = (Like) => {
-      const url = $(".leancloud-like").length === 1 ? $(".leancloud-like").attr('id').trim() : 'http://example.com';
+      const url = $(".leancloud-like").length === 1 ? $(".leancloud-like").attr('id').trim() : 'https://gitee.com/vision2best/note';
       var query = new Like;
       query.save({
         path: url,
