@@ -19,12 +19,12 @@
   <meta property="og:type" content="website">
 <meta property="og:title" content="友链">
 <meta property="og:url" content="https://vision2best.gitee.io/links/index.html">
-<meta property="og:site_name" content="卫升">
+<meta property="og:site_name" content="卫升的note">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="卫升">
 <meta name="twitter:card" content="summary_large_image">
   
-  <title>友链 - 卫升</title>
+  <title>友链 - 卫升的note</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -252,6 +252,33 @@
 
 
 
+  <!-- Comments -->
+  <article class="comments" id="comments" lazyload>
+    
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"GoTWUoiIjnjvBGR2sKrjsXSf-gzGzoHsz","appKey":"Ab6Va2qjQrS22aslWdkcCFhy","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":true},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
 
               </div>
             </div>
@@ -295,7 +322,7 @@
 
   <footer class="text-center mt-5 py-3">
   <div class="footer-content">
-     愿世间美好与你环环相扣<i class="iconfont icon-love"></i><a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <br/>愿世间美好与你环环相扣 
   </div>
   
   <div class="statistics">
