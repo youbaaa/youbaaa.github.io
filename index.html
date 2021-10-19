@@ -155,7 +155,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="">
+            <span class="h2" id="subtitle" title="我在开了灯的床头下，想问问自己的心啊。">
               
             </span>
 
@@ -326,13 +326,13 @@ Quick
       
       jQuery.ajax({
         type: 'GET',
-        url: 'https://v1.hitokoto.cn/?encode=text&amp;c=i',
+        url: 'https://v1.hitokoto.cn/',
         headers: {},
         dataType: 'json',
         success: function (result) {
           var text;
           if (result) {
-            var keys = ''.split('.')
+            var keys = 'hitokoto'.split('.')
             if (result instanceof Array) {
               result = result[0]
             }
