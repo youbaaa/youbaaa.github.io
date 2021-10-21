@@ -24,7 +24,7 @@
 <meta property="og:description" content="git在日常开发的过程中，作为一个分布式版本控制工具，我们有必要了解他的详细使用说明； git的安装就不多说了，windows去官网下载安装程序安装即可，mac常用的则是通过homebrew安装brew install git，linux则是apt-get install git；安装后在命令行输入git验证即可； 以下则为我整理收集的常用的命令： 12345git init &lt;name&amp;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-10-20T11:13:36.000Z">
-<meta property="article:modified_time" content="2021-10-21T05:46:27.678Z">
+<meta property="article:modified_time" content="2021-10-21T05:57:12.575Z">
 <meta property="article:author" content="卫升">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -212,7 +212,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      9.1k 字
+      9.6k 字
     </span>
   
 
@@ -221,7 +221,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      28 分钟
+      30 分钟
     </span>
   
 
@@ -320,7 +320,7 @@
 <p>可能在日常工作，我们会出现多个问题同时解决的问题，但是我们一个问题未解决完，又不能提交上去。那么可以：</p>
 <figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">git stash<br>e.g.<br>git stash<br>Saved working directory and index state WIP on master: 7230667 dev update<br>含义：可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作：当使用 git stash 后 git status 会发现工作空间没有变更的了<br><br>git stash list<br>e.g.<br>git stash list<br>stash@&#123;0&#125;: WIP on master: 7230667 dev update<br>含义：查看stash列表；<br><br>git stash apply &lt;stash@&#123;0&#125;&gt;<br>git stash drop &lt;stash@&#123;0&#125;&gt;<br>含义：恢复刚才的stash，但stash内容不删除 ,使用drop进行删除<br><br>git stash pop &lt;stash@&#123;0&#125;&gt;<br>含义：恢复刚才的stash，同时删除stash内容<br><br>git cherry-pick &lt;commit&gt;<br>含义：在master分支上修复的bug，想要合并到当前dev分支，可以用 git cherry-pick &lt;commit&gt; 命令，把bug提交的修改“复制”到当前分支，避免重复劳动。<br></code></pre></div></td></tr></table></figure>
 
-<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">git rebase<br>含义：rebase操作的特点：把分叉的提交历史“整理”成一条直线，看上去更直观。缺点是本地的分叉提交已经被修改过了。<br><br>git pull<br>含义：从远程仓库更新到本地仓库；<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">git tag &lt;tagname&gt;<br>含义：可以打一个名字为name的新标签：<br><br><br>git tag &lt;tagname&gt; &lt;commit&gt;<br>含义：对commit id是f52c633，打上tag；<br><br>git tag<br>e.g.<br>git tag<br>v0.1<br>(END)<br>含义：查看所有标签；<br><br>git show &lt;tagname&gt;<br>e.g.<br>commit 72306671de3a81d15170adf009f6e8c0b698649f (HEAD -&gt; master, tag: v0.1)<br>Author: 张璜 &lt;zhuang@servyou.com.cn&gt;<br>Date:   Thu Oct 21 13:10:57 2021 +0800<br><br>    dev update<br><br>diff --git a/readme.txt b/readme.txt<br>index d601bdd..b5f7955 100644<br>--- a/readme.txt<br>+++ b/readme.txt<br>@@ -1,3 +1,4 @@<br> git<br> first update<br> second update<br>+dev update<br>(END)<br>含义：查看标签信息<br><br>git rebase<br>含义：rebase操作的特点：把分叉的提交历史“整理”成一条直线，看上去更直观。缺点是本地的分叉提交已经被修改过了。<br><br>git pull<br>含义：从远程仓库更新到本地仓库；<br></code></pre></div></td></tr></table></figure>
 
 <p>附上git本地生成ssh key操作：</p>
 <blockquote>
